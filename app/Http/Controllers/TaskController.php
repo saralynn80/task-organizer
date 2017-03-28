@@ -6,6 +6,7 @@ use App\Task;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\TaskRepository;
+use Carbon\Carbon;
 use Request;
 
 class TaskController extends Controller
@@ -13,7 +14,11 @@ class TaskController extends Controller
 	// Return all tasks when user is at /tasks URI
 	public function index()
 	{
-		$tasks = Task::latest()->get();
+		$tasks = Task::latest('specific_duedate')->get();
+
+		//$tasks = Task::latest('specific_duedate')->incomplete()->get();
+
+		//dd($task->specific_duedate);
 
 		return view('pages.tasks', compact('tasks'));
 	}
@@ -65,11 +70,16 @@ class TaskController extends Controller
 	// Stores values in db, redirects user
 	public function store()
 	{
-		$input = Request::all();
-
-		Task::create($input);
+		Task::create(Request::all());
 
 		return redirect('tasks');
+	}
+
+	public function destroy($id)
+	{
+    	Task::findOrFail($id)->delete();
+
+    	return redirect('/tasks');
 	}
 
 }

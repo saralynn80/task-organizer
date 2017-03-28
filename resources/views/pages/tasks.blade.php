@@ -12,7 +12,21 @@
 
     @foreach ($tasks as $task)
         <ul>
-            <li>{{ $task->name }}</li>
+            <li>{{ $task->name }} 
+            	<a style="font-weight: bold">({{ $task->specific_duedate }})</a>
+            		<form action="/{{ $task->id }}" method="POST">
+            			{{ csrf_field() }}
+            			{{ method_field('DELETE') }}
+
+            		 <button class="btn btn-labeled btn-danger">
+            		 	<i class="glyphicon glyphicon-trash"></i></button>
+
+
+                	<button class="btn btn-labeled btn-success">
+                		<i class="glyphicon glyphicon-ok"></i></button>
+                		</form>
+        			
+        	</li>
         </ul>
     @endforeach
 
