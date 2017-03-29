@@ -24,7 +24,6 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-// View all tasks
 Route::get('/tasks', 'TaskController@index');
 Route::get('/today', 'TaskController@today');
 Route::get('/tomorrow', 'TaskController@tomorrow');
@@ -39,3 +38,9 @@ Route::get('tasks/{id}', 'TaskController@show');
 // Store a new task
 Route::post('tasks', 'TaskController@store');
 Route::delete('/{id}', 'TaskController@destroy');
+
+// Update tasks
+Route::get('/{id}/edit', 'TaskController@edit');
+
+// If views were setup correctly, I could have just used the following to create all task routes
+//Route::resource('tasks', 'TaskController');

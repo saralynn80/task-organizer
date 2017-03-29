@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\TaskRepository;
 use Carbon\Carbon;
-use Request;
+use App\Http\Requests\CreateTaskRequest;
 
 class TaskController extends Controller
 {
@@ -68,16 +68,33 @@ class TaskController extends Controller
 	}
 
 	// Stores values in db, redirects user
-	public function store()
+	public function store(CreateTaskRequest $request)
 	{
-		Task::create(Request::all());
 
-		return redirect('tasks');
+		Task::create($request->all());
+
+		return redirect('/tasks');
 	}
 
 	public function destroy($id)
 	{
     	Task::findOrFail($id)->delete();
+
+    	return redirect('/tasks');
+	}
+
+	public function edit($id)
+	{
+    	$task = Task::findOrFail($id);
+
+    	return view('common.edit', compact('task'));
+	}
+
+	public function update($id, Request $request)
+	{
+    	$task = Task::findOrFail($id);
+
+    	$task->update($request->all());
 
     	return redirect('/tasks');
 	}

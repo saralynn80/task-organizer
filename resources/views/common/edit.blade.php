@@ -1,8 +1,12 @@
-@extends('layouts.app')
+@extends('layouts/app')
 
 @section('content')
 
-{!! Form::open(['url' => 'tasks']) !!}
+	<h3>Edit: {!! $task->name !!}} </h3>
+
+	<hr/>
+
+	{!! Form::model($task, ['method' => 'PATCH', 'action' => ['TaskController@edit', $task->id]]) !!}
 
 <div class="form-group">
 
@@ -67,6 +71,5 @@
 	</ul>
 
 @endif
-
 
 @stop
